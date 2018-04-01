@@ -7,7 +7,8 @@ import networkx as nx
 from sys import exit
 import os
 
-#Method to get data 
+'''Method to get data. this function gets the information from the specified url and calls the appropriate function according to the 
+choice, so if choice is "deviceinfo", deviceInformation function will be executed'''
 def fetchResponse(url,choice):
 	response = requests.get(url)
 
@@ -25,7 +26,8 @@ def fetchResponse(url,choice):
 	else:
 		response.raise_for_status()
 
-#Device Information all connected devices 
+'''Device Information all connected devices, stores the IP address, MAC address in deviceMAC dict, stores IP address and switch DPID 
+in switch dict and port numbers in hostPorts dict'''
 def deviceInformation(data):
 	global switch
 	global deviceMAC
@@ -51,7 +53,7 @@ def deviceInformation(data):
 
 
 
-#Method to find link information of all switches 
+#Method to find link information of all switches, edges between switches and hosts are added to the graph
 def Switchlinkinfo(data,s):
         
 	global switchLinks
@@ -101,7 +103,7 @@ def Switchlinkinfo(data,s):
 	switchLinks[switchID]=links
         
         
-#Finding best Route for Traversal from host to destination 
+#Finding best Route for Traversal from host to destination, the shortest paths are found out and added to nodeList
 def computeRoute():
 	pathKey = ""
 	nodeList = []
@@ -145,7 +147,7 @@ def costcompute(data,key):
                        
 
 
-#Find link cost from bandwidth URI
+#Find link cost from bandwidth URI, cost is retrieved for each link based on the port number and stored in finalcost dict
 def fetchLinkCost():
         global finalcost
 	global portKey
@@ -339,10 +341,10 @@ h1 = "10.0.0." + str(h1)
 h2 = "10.0.0." + str(h2)
 
 
-# Stores Info About H3 And H4's Switch
+# Stores Info About H1 And H2's Switch
 switch = {}                             
 
-# Mac of H3 And H4
+# Mac of H1 And H2
 deviceMAC = {}
 
 # Stores Host Switch Ports
